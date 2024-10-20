@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="ML-Bench: Evaluating Large Language Models and Agents for Machine Learning Tasks on Repository-Level Code">
+  <meta name="keywords" content="ML-Bench, benchmark, code-generation, paper-with-code, large-language-models, llm">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ML-Bench: Evaluating Large Language Models and Agents for Machine Learning Tasks on Repository-Level Code</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.table.min.css">
+  <!--  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">-->
+  <link rel="stylesheet" href="./stylesheets/layout.css">
+  <link rel="stylesheet" href="./stylesheets/index.css">
+
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+  <!-- 
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <a class="navbar-item" href="https://hkunlp.github.io/">
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>
+        </a>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More Research
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://yale-lily.github.io/spider">
+              Spider
+            </a>
+            <a class="navbar-item" href="https://unifiedskg.com">
+              UnifiedSKG
+            </a>
+            <a class="navbar-item" href="https://github.com/Yushi-Hu/IC-DST">
+              IC-DST
+            </a>
+            <a class="navbar-item" href="https://github.com/HKUNLP/icl-selective-annotation">
+              Selective Annotation
+            </a>
+            <a class="navbar-item" href="https://lm-code-binder.github.io/">
+              Binder
+            </a>
+            <a class="navbar-item" href="https://instructor-embedding.github.io/">
+              Instructor
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </nav> 
+  
+  -->
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">ML-Bench: Evaluating Large Language Models and Agents for Machine Learning Tasks on Repository-Level Code </h1>
+            <div class="is-size-5 publication-authors">
+              <!--TODO: CHANGE THE AUTHOR URLS HERE-->
+                            <span class="author-block">
+                <a href="">Yuliang Liu*</a><sup>♣</sup>,</span>
+              <span class="author-block">
+                <a href="">Xiangru Tang*</a><sup>♠</sup>,</span>
+              <span class="author-block">
+                <a href="">Zefan Cai*</a><sup>♥</sup>,</span>
+              <span class="author-block">
+                <a href="">Junjie Lu</a><sup></sup>,</span>
+              <span class="author-block">
+                <a href="">Yichi Zhang</a><sup></sup>,</span>
+              <span class="author-block">
+                <a href="">Yanjun Shao</a>,</span>
+
+           <span class="author-block">
+                             <a href="">Zexuan Deng</a>,</span>           <span class="author-block">
+                             <a href="">Helan Hu</a>,</span>           <span class="author-block">
+                             <a href="">Zengxian Yang</a>,</span>           <span class="author-block">
+                             <a href="">Kaikai An</a>,</span>           <span class="author-block">
+                             <a href="">Ruijun Huang</a>,</span>  
+              <span class="author-block">             <a href="">Shuzheng Si</a>,</span>
+              <span class="author-block">             <a href="">Sheng Chen</a>,</span>
+              <span class="author-block">             <a href="">Haozhe Zhao</a>,</span>
+              <span class="author-block">             <a href="">Zhengliang Li</a>,</span>
+              <span class="author-block">             <a href="">Liang Chen</a>,</span>
+              <span class="author-block">             <a href="">Zhiwei Jiang</a>,</span>
+              <span class="author-block">             <a href="">Baobao Chang</a>,</span>
+              <span class="author-block">             <a href="">Yujia Qin</a>,</span>
+              <span class="author-block">
+                  <a href="">Wangchunshu Zhou</a>,</span>
+              <span class="author-block">
+
+                <span class="author-block">
+                <a href="">Yilun Zhao</a><sup>♠</sup>,  </span>
+                                <span class="author-block">
+                <a href="">Arman Cohan</a><sup>♠</sup>,  </span>
+                
+                <span class="author-block">
+                <a href="">Mark Gerstein</a><sup>♠</sup>,  </span>
+            </div>
+
+<div class="is-size-5 publication-authors">
+  <span class="author-block"><sup>♠</sup>Yale University </span>
+  <span class="author-block"><sup>♣</sup>Nanjing University</span>
+    <span class="author-block"><sup>♥</sup>Peking University</span>
+
+</div>
+
+
+<div class="is-size-5 publication-authors">
+  <span class="author-block" style="font-size: 13px;"><sup>*</sup> Contributed equally.</span>
+</div>
+
+
+
+
+            
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2311.09835"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- TODO: Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/gersteinlab/ML-bench"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- TODO: Dataset Link. -->
+                <span class="link-block">
+                  <a href="https://huggingface.co/datasets/super-dainiu/ml-bench"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="far fa-images"></i>
+                    </span>
+                    <span>Data</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+
+        <h2 class="subtitle has-text-centered">
+Our contribution:
+         <br>       
+          
+<div style="text-align: has-text-centered;">
+
+
+<div style="text-align: left;">
+
+<br>
+1. ML-Bench provides a comprehensive benchmark for LLMs, focusing on repository-scale code interpretation and end-to-end execution. It addresses gaps in current benchmarking and challenges models with real-world programming tasks.
+
+<br><br>
+2. By featuring 9,641 examples across 18 GitHub repositories and employing two distinct setups, ML-LLM-Bench and ML-AGENT-Bench, ML-Bench assesses the capability of LLMs to generate executable scripts and autonomous agents to perform complex coding tasks in a Linux sandbox environment.
+
+  <br><br>
+3. The benchmark reveals significant room for improvement in current LLMs, as demonstrated by issues with hallucinated outputs and bash script generation challenges, while also confirming the potential for iterative action and feedback to enhance performance in complex task resolution.
+
+</div>
+       </div>      
+</h2><br>
+                  <img src="static/images/main.png">
+
+        <br>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+Despite Large Language Models (LLMs) like GPT-4 achieving impressive results in function-level code generation, they struggle with repository-scale code understanding (e.g., coming up with the right arguments for calling routines), requiring a deeper comprehension of complex file interactions. 
+Also, recently, people have developed LLM agents that attempt to interact with repository code (e.g., compiling and evaluating its execution), prompting the need to evaluate their performance.  
+These gaps have motivated our development of ML-Bench, a benchmark rooted in real-world programming applications that leverage existing code repositories to perform tasks. 
+Addressing the need for LLMs to interpret long code contexts and translate instructions into precise, executable scripts, ML-Bench encompasses annotated 9,641 examples across 18 GitHub repositories, challenging LLMs to accommodate user-specified arguments and documentation intricacies effectively.
+To evaluate both LLMs and AI agents, two setups are employed: 
+ML-LLM-Bench for assessing LLMs' text-to-code conversion within a predefined deployment environment, and ML-Agent-Bench for testing autonomous agents in an end-to-end task execution within a Linux sandbox environment. 
+Our findings indicate that while GPT-4o leads with a Pass@5 rate surpassing 50%, there remains significant scope for improvement, highlighted by issues such as hallucinated outputs and difficulties with bash script generation. 
+Notably, in the more demanding ML-Agent-Bench, GPT-4o achieves a 76.47% success rate, reflecting the efficacy of iterative action and feedback in complex task resolution. 
+            </p>
+<br>
+         <!--            <img src="static/images/structure-1.png"> -->
+
+
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="https://arxiv.org/abs/2311.09835">
+          <i class="fas fa-file-pdf" style="color:white"></i>
+        </a>
+        <a class="icon-link" href="https://github.com/ML-Bench/ML-Bench.github.io" class="external-link" disabled>
+          <i class="fab fa-github" style="color:white"></i>
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+            <p>
+              This means you are free to borrow the <a href="https://github.com/nerfies/nerfies.github.io">source
+                code</a> of this website,
+            </p>
+            <p>
+              This website is forked from <a href="https://github.com/ds1000-code-gen/ds1000-code-gen.github.io">DS-1000</a>. We thank the authors for their work.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+
+<!-- Default Statcounter code for ml-bench
+https://ml-bench.github.io/ -->
+<script type="text/javascript">
+var sc_project=12941090; 
+var sc_invisible=1; 
+var sc_security="040ccbab"; 
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="web statistics"
+href="https://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="https://c.statcounter.com/12941090/0/040ccbab/1/"
+alt="web statistics"
+referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+<!-- End of Statcounter Code -->
+  
+</body>
+
+</html>
