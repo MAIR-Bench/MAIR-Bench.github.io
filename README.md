@@ -40,11 +40,6 @@ Each row contains:
 - `id`: The ID of the document.
 - `doc`: The content of the document.
 
-The following figure shows the tasks and domains in MAIR:
-<p align="center">
-  <img src="assets/MAIR_Task.png" alt="Tasks and domains in MAIR" width="500"/>
-</p>
-
 <details>
 <summary>List of 6 domains and 126 tasks.</summary>
   
@@ -102,49 +97,6 @@ The following figure shows the tasks and domains in MAIR:
 - **QA:** Competition-Math, StackMathQA
   
 </details>
-
-## Evaluation Script
-Evaluating text embedding models
-```python
-from mair import eval_embedding
-from sentence_transformers import SentenceTransformer
-model_name = "sentence-transformers/all-MiniLM-L6-v2"
-model = SentenceTransformer(model_name)
-```
-
-Evaluating re-ranking models
-```python
-from mair import eval_rerank
-from sentence_transformers import CrossEncoder
-model_name = "jinaai/jina-reranker-v2-base-multilingual"
-model = CrossEncoder(model_name)
-```
-
-Evaluating RankGPT
-```python
-from mair import RankGPT, eval_rerank
-```
-
-Evaluating BM25
-```python
-from mair import BM25, eval_bm25
-```
-
-<p align="center">
-  <img src="assets/Results_Bar.png" alt="Evaluation results on MAIR compare model performance with and without instructions." width="700"/>
-</p>
-
-## Evaluation on IFEval
-We designed the IFEval task (Zhou et al., 2023) within MAIR, which consists of 8 different instruction-following subtasks, such as `format` (selecting responses in a specific format), `keywords` (including specific words), and `length` (adhering to length restrictions). 
-```python
-from mair import RankGPT, eval_rerank
-model = RankGPT(model='gpt-4o', api_key='XXX')
-results = eval_rerank(model=model, tasks=['IFEval'], report_sub_task=True)
-```
-
-<p align="center">
-  <img src="assets/IFEval.png" alt="Results (nDCG@10) on IFEval sub-tasks" width="500"/>
-</p>
 
 ## Cite
 ```
